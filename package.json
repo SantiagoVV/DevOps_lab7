@@ -39,7 +39,12 @@
     "url": "https://github.com/bahmutov/realworld/issues"
   },
   "homepage": "https://github.com/bahmutov/realworld#readme",
+  "dependencies": {
+    "parcel": "^2.0.0",
+    "glue": "^6.0.0"
+  },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "@bahmutov/cy-api": "1.6.2",
     "@cypress/code-coverage": "3.9.12",
     "babel-plugin-istanbul": "5.2.0",

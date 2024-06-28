@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realworld
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: realworld
+  template:
+    metadata:
+      labels:
+        app: realworld
+    spec:
+      containers:
+      - name: realworld
+        image: alu0100990522/realworld:latest
+        ports:
+        - containerPort: 4100
+        - containerPort: 3000
