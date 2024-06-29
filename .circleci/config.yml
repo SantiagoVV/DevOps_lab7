@@ -29,7 +29,19 @@ jobs:
           command: |
             echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            if [ -z "$GCP_PROJECT_ID" ]; then
+              echo "GCP_PROJECT_ID is not set"
+              exit 1
+            fi
             gcloud config set project $GCP_PROJECT_ID
+            if [ -z "$GKE_CLUSTER" ]; then
+              echo "GKE_CLUSTER is not set"
+              exit 1
+            fi
+            if [ -z "$GCP_ZONE" ]; then
+              echo "GCP_ZONE is not set"
+              exit 1
+            fi
             gcloud container clusters get-credentials $GKE_CLUSTER --zone $GCP_ZONE --project $GCP_PROJECT_ID
       - run:
           name: Deploy to GKE
