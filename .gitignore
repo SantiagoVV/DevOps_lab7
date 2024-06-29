@@ -68,3 +68,4 @@ typings/
 dist
 client/build
 client/.cache
+.circleci/gcloud-service-key.json
