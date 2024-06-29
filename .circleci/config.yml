@@ -7,11 +7,17 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libnss3
+      - run:
           name: Install Node.js dependencies
           command: npm install
       - run:
-          name: Run tests
-          command: npm test
+          name: Start the application and run tests
+          command: |
+            npx start-server-and-test start http://localhost:4100 cypress:test
 
   deploy:
     docker:
