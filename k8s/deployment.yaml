@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: realworld-app
-        image: realworld:latest
+        image: alu0100990522/realworld:latest
         ports:
         - containerPort: 4100
         env:
