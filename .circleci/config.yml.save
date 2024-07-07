@@ -1,0 +1,42 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libnss3
+      - run:
+          name: Install Node.js dependencies
+          command: npm install
+      - run:
+          name: Start the application and run tests
+          command: |
+            npx start-server-and-test start http://localhost:4100 cypress:test
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk:latest
+    steps:
+      - checkout
+      - run:
+          name: Authenticate to GCP
+          command: |
+            echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud config set project $GCP_PROJECT_ID
+            gcloud container clusters get-credentials $GKE_CLUSTER --zone $GCP_ZONE --project $GCP_PROJECT_ID
+      - run:
+          name: Deploy to GKE
+          command: |
+            kubectl apply -f k8s/
+
+workflows:
+  version: 2
+  build_and_deploy:
+ 

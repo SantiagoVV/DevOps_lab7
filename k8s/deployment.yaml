@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realworld-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: realworld-app
+  template:
+    metadata:
+      labels:
+        app: realworld-app
+    spec:
+      containers:
+      - name: realworld-app
+        image: realworld:latest
+        ports:
+        - containerPort: 4100
+        env:
+        - name: NODE_ENV
+          value: "production"
+
