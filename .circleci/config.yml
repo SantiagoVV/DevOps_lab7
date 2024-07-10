@@ -7,15 +7,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install system dependencies
+          name: Instalar dependencias
           command: |
             apt-get update
             apt-get install -y libnss3
       - run:
-          name: Install Node.js dependencies
+          name: Instalar dependencias Node.js
           command: npm install
       - run:
-          name: Start the application and run tests
+          name: Empezar la aplicacion y los tests
           command: |
             npx start-server-and-test start http://localhost:4100 cypress:test
 
@@ -25,7 +25,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Authenticate to GCP
+          name: Autentificarse en GCP
           command: |
             echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/gcloud-service-key.json
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
@@ -44,7 +44,7 @@ jobs:
             fi
             gcloud container clusters get-credentials $GKE_CLUSTER --zone $GCP_ZONE --project $GCP_PROJECT_ID
       - run:
-          name: Deploy to GKE
+          name: Desplegar GKE
           command: |
             kubectl apply -f k8s/
 
